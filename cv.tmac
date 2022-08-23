@@ -45,8 +45,10 @@
 ..
 .\" .IN - info colon separated: label, value 
 .de IN	
-\fB\\$1:\fP \\$2	\" print bold label with colon, value in roman
+.ta T 0.7i			\" set tab size
+\fB\\$1:\fP\t\\$2	\" print bold label with colon, tab, value in roman
 .sp 0.3				\" newline
+.ta T 0.5			\" reset tab size
 ..
 .\" .LS - list with columns: items per column, column width (ems)
 .de LS
