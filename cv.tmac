@@ -103,3 +103,11 @@
 .ll +1.2	\" reset line length
 .sp -1
 ..
+.\" .DF - draw footer and start new page
+.de DF
+'sp             \" newline, no text break
+.tl ''\s-2\\*(FO\s+2''  \" draw centered footer title, from FO string
+'sp 2           \" newlines, no text break
+..
+.\" set trap for .DF macro, 2m from bottom of each page
+.wh -2m DF      

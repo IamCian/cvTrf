@@ -8,7 +8,7 @@
 - section headings
 - columned lists
 - timelines/dates
-- (documentation in file!)
+- footers 
 
 ## Invocation 
 
