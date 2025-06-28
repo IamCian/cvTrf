@@ -49,8 +49,10 @@
 .   sp (\\n[HEADER_TOP]u + \\n[PIC_HEIGHT]i + 1v - \\n[VERT_POS]u)
 ..
 .de INFO
+.   ds LABEL \\$1
+.   shift
 .   ta T 0.7i
-.   EXEC \fB\\$1:\fP\t\\$2
+.   EXEC \fB\\*[LABEL]:\fP\t\\$*
 .   br
 .   ta T 0.5
 ..
@@ -90,9 +92,9 @@
 .   in +1i
 .   sp -1
 .   LEFT_RULE
-.   EXEC \fB\\$3\fP
+.   shift 2
+.   EXEC \fB\\$^\fP
 .   br
-.   if \\n(.$.=4 \fB\\$4\fP:
 ..
 .de TIMELINE_DATE_END
 .   LEFT_RULE_END
