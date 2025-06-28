@@ -1,18 +1,22 @@
 .\" vim: ft=groff
-.ps 12
-.vs 13
-.
-.ds PIC_WIDTH  2i
-.ds PIC_HEIGHT 2i
+.nr PIC_WIDTH  2 \" inches
+.nr PIC_HEIGHT 2
 .ds PIC_NAME   profile.pdf
 .
-.ds FIG_PAD 1.2m \" figure padding
+.nr FIG_PAD 1.2m \" figure padding
+.nr VSPC    120  \" vertical space as % of text size
 .
 .aln VERT_POS nl
+.
+.de SIZE
+.   ps \\$1
+.   vs ((\\n[.s] * \\n[VSPC]) / 100)
+..
+.SIZE 12
+.
 .de EXEC
 \\$^
 ..
-.
 .de LEFT_RULE
 .   br
 .   nr RULE_TOP \\n[VERT_POS]
@@ -26,32 +30,33 @@
 .   br
 ..
 .de HEADER
+.   br 
 .   nr HEADER_TOP \\n[VERT_POS]
-.   device pdf: pdfpic \\*[PIC_NAME] -L \\*[PIC_WIDTH]
-.   in +(\\*[PIC_WIDTH] + \\*[FIG_PAD])
-.   sp 1.3
-.   EXEC \s[40]\\$^\s[]
-.   sp 0.3
-.   ps 15
+.   device pdf: pdfpic \\*[PIC_NAME] -L \\n[PIC_WIDTH]i
+.   in +(\\n[PIC_WIDTH]i + \\n[FIG_PAD]u)
+.   sp
+.   EXEC \s[36]\\$^\s[0]
+.   br
+.   SIZE +3
 .   EXEC \fICurriculum Vitae\fP
-.   sp 0.7
+.   sp 0.5
 .   LEFT_RULE
-.   sp 0.3
 ..
 .de HEADER_END
+.   SIZE -3
 .   LEFT_RULE_END
-.   ps
-.   in -(\\*[PIC_WIDTH] + \\*[FIG_PAD])
-.   sp (\\n[HEADER_TOP]u + \\*[PIC_HEIGHT] + 1v - \\n[VERT_POS]u)
+.   in -(\\n[PIC_WIDTH]i + \\n[FIG_PAD]u)
+.   sp (\\n[HEADER_TOP]u + \\n[PIC_HEIGHT]i + 1v - \\n[VERT_POS]u)
 ..
 .de INFO
 .   ta T 0.7i
 .   EXEC \fB\\$1:\fP\t\\$2
-.   sp 0.3
+.   br
 .   ta T 0.5
 ..
 .de LIST
-.   sp .3
+.   br
+.   vs ((\\n[.v]u * \\n[VSPC]) / 100)
 .   nr LIST_TOP  \\n[VERT_POS]
 .   nr MAX_ROWS  \\$1
 .   nr COL_WIDTH \\$2
@@ -62,26 +67,25 @@
 .   nr COL_NUM  (\\n[ITEM_NUM] / \\n[MAX_ROWS])
 .   nr ITEM_NUM (\\n[ITEM_NUM] + 1)
 .   nr INDENT   (\\n[COL_NUM] * \\n[COL_WIDTH])
-.   ti +(\\n[INDENT] + \\*[FIG_PAD])
+.   ti +(\\n[INDENT] + \\n[FIG_PAD]u)
 .   EXEC \(bu \\$^
-.   sp .3
 .   if ( (\\n[ITEM_NUM] % \\n[MAX_ROWS]) = 0 ) \
 .       sp (\\n[LIST_TOP]u - \\n[VERT_POS]u)
 ..
 .de LIST_END
-.   sp (\\n[LIST_TOP]u - \\n[VERT_POS]u + \\n[MAX_ROWS]v + 1v)
+.   vs
+.   sp ((\\n[LIST_TOP]u + \\n[MAX_ROWS]v + 1v) - \\n[VERT_POS]u))
 ..
 .de SECTION
-.   sp 1.5
-.   ps 20
-.   EXEC \v'.3m'\l'6.5i'\h'-6.5i'\v'-.3m'\\$^
-.   sp .3m
-.   ps
+.   sp
+.   EXEC \d\l'\\n[.l]u'\h'-\\n[.l]u'\u\c
+.   EXEC \s[20]\\$^\s[0]
+.   sp .5
 ..
 .de TIMELINE_DATE
 .   sp .5
-.   in +\\*[FIG_PAD]
-.   ll -\\*[FIG_PAD]
+.   in +\\n[FIG_PAD]u
+.   ll -\\n[FIG_PAD]u
 .   EXEC \fI\\$1 \- \\$2\fP
 .   in +1i
 .   sp -1
@@ -92,8 +96,8 @@
 ..
 .de TIMELINE_DATE_END
 .   LEFT_RULE_END
-.   in -(1i + \\*[FIG_PAD])
-.   ll +\\*[FIG_PAD]
+.   in -(1i + \\n[FIG_PAD]u)
+.   ll +\\n[FIG_PAD]u
 ..
 .de FOOTER
 '   sp
